@@ -5,6 +5,7 @@ const tareasController = require("../../Controllers/tareasController")
 
 // Rutas
 router.get("/", tareasController.list);
+router.get("/sprint/:id", tareasController.sprint);
 router.get("/articulos", tareasController.art);
 
 

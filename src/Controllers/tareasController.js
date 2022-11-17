@@ -33,5 +33,29 @@ module.exports = {
             data: tareas
         })          
       }).catch((error) => res.send(error));
-  }
+  },
+  sprint: (req, res) => {
+    console.log(req.params.id);
+
+    db.vw_sprint.findAll({
+          where: {
+            [Op.and]: [
+              { id: req.params.id}
+            ]
+          }
+        }
+     )
+      .then((tareas) => {
+        //res.render("products/productList.ejs", { products });
+        //res.json(tareas)
+        res.json({
+          meta:{
+            status: 200,
+            total : tareas.length,
+            url : `http://${req.headers.host}/tareas/articulos`
+          },
+          data: tareas
+      })          
+    }).catch((error) => res.send(error));
+}
   };
