@@ -48,13 +48,36 @@ module.exports = {
       .then((tareas) => {
         //res.render("products/productList.ejs", { products });
         //res.json(tareas)
+        let backlog  = tareas.filter(tarea=> tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' )
+        let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'P')
+        let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
+        let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
+        let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E')
+
+        let totalBacklog  = backlog.length
+        let totalProceso  = proceso.length
+        let totalTesting  = testing.length
+        let totalTestingOk  = testingOk.length
+        let totalHecho  = hecho.length
+
         res.json({
           meta:{
             status: 200,
             total : tareas.length,
-            url : `http://${req.headers.host}/tareas/articulos`
+            enBacklog:totalBacklog ,
+            enProceso:totalProceso,
+            enTesting:totalTesting,
+            enTestingOk:totalTestingOk,
+            hecho:totalHecho,
+            url : `http://${req.headers.host}/tareas/sprint/${req.params.id}`
           },
-          data: tareas
+          data: {
+             backlog,
+             proceso,
+             testing,
+             testingOk,
+             hecho
+          }
       })          
     }).catch((error) => res.send(error));
 }

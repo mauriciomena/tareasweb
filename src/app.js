@@ -24,7 +24,7 @@ app.use('/tareas', tareasRoutes) ;
 //app.use((req,res,next)=>{res.status(404).render('not-found')});
 
 // Server
-let puerto = port || 8000
+let puerto = port || 8001
 
 app.listen(puerto, () => {
     console.log('dashapp backend activo en puerto: '+puerto );
