@@ -48,7 +48,7 @@ module.exports = {
       .then((tareas) => {
         //res.render("products/productList.ejs", { products });
         //res.json(tareas)
-        let backlog  = tareas.filter(tarea=> tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' )
+        let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' )&& tarea.tarea_en_proceso === 0 ) )
         let proceso  = tareas.filter(tarea=> tarea.tarea_en_proceso > 0 )
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
         let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
