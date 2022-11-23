@@ -49,7 +49,7 @@ module.exports = {
         //res.render("products/productList.ejs", { products });
         //res.json(tareas)
         let backlog  = tareas.filter(tarea=> tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' )
-        let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'P')
+        let proceso  = tareas.filter(tarea=> tarea.tarea_en_proceso > 0 )
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
         let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
         let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E')

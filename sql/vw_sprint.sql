@@ -1,5 +1,5 @@
 
-Create VIEW vw_sprint
+alter VIEW vw_sprint
 as
 select sprint as id,
          (CASE WHEN dificultad = '3'THEN 'ALTA'
@@ -7,6 +7,10 @@ select sprint as id,
               ELSE
               'BAJA'
               END) AS DIFICULTAD,
+       trabajos_proyectos.estado_tarea,
+       trabajos_proyectos.numero_tarea,
+       trabajos_proyectos.asunto,
+       dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) as tarea_en_proceso,
         (CASE WHEN trabajos_proyectos.estado_tarea in ('P','N') AND dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) = 0  THEN STR(trabajos_proyectos.numero_tarea)+'-'+trabajos_proyectos.asunto ELSE '' END) AS BACKLOG,
         (CASE WHEN trabajos_proyectos.estado_tarea in ('P') AND dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) > 0  THEN STR(trabajos_proyectos.numero_tarea)+'-'+trabajos_proyectos.asunto ELSE '' END) AS EN_PROCESO,
         (CASE WHEN trabajos_proyectos.estado_tarea in ('T')  THEN STR(trabajos_proyectos.numero_tarea)+'-'+trabajos_proyectos.asunto ELSE '' END) AS EN_TESTING,

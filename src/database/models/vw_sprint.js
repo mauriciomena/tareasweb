@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     estado_tarea: DataTypes.STRING,
     numero_tarea: DataTypes.BIGINT,
     asunto: DataTypes.STRING,
+    tarea_en_proceso:DataTypes.BIGINT,
 		BACKLOG: DataTypes.STRING,
 		EN_PROCESO: DataTypes.STRING,
 		EN_TESTING: DataTypes.STRING,
