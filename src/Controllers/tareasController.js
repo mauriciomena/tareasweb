@@ -47,24 +47,33 @@ module.exports = {
      )
       .then((tareas) => {
         //res.render("products/productList.ejs", { products });
-        //res.json(tareas)
+         
         let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' )&& tarea.tarea_en_proceso === 0 ) )
+        //let tiempobacklog = backlog.reduce((acc,tarea)=>{ return acc += tarea.tiempo_presupuestado })
         let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'P' && tarea.tarea_en_proceso > 0 )
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
         let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
         let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E')
-
+        
         let totalBacklog  = backlog.length
         let totalProceso  = proceso.length
         let totalTesting  = testing.length
         let totalTestingOk  = testingOk.length
         let totalHecho  = hecho.length
 
+        // let tiempobacklog  = backlog.reduce((acum,current)=>  acum + current.tiempo_presupuestado)
+        // console.log('----------------------------------------tiempobacklog');
+        // console.log(acum);
+        // console.log('----------------------------------------tiempobacklog');
+        
+
+
         res.json({
           meta:{
             status: 200,
             total : tareas.length,
             enBacklog:totalBacklog ,
+            
             enProceso:totalProceso,
             enTesting:totalTesting,
             enTestingOk:totalTestingOk,
@@ -79,6 +88,6 @@ module.exports = {
              hecho
           }
       })          
-    }).catch((error) => res.send(error));
+    }).catch((error) => res.json(error));
 }
   };

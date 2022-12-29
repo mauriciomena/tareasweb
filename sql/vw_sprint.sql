@@ -10,6 +10,7 @@
 --        trabajos_proyectos.estado_tarea,
 --        trabajos_proyectos.numero_tarea,
 --        trabajos_proyectos.asunto,
+--           trabajos_proyectos.tiempo_presupuestado,
 --        dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) as tarea_en_proceso,
 --         (CASE WHEN trabajos_proyectos.estado_tarea in ('P','N') AND dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) = 0  THEN STR(trabajos_proyectos.numero_tarea)+'-'+trabajos_proyectos.asunto ELSE '' END) AS BACKLOG,
 --         (CASE WHEN trabajos_proyectos.estado_tarea in ('P') AND dbo.f_sql_tareas_en_proceso(trabajos_proyectos.numero_tarea) > 0  THEN STR(trabajos_proyectos.numero_tarea)+'-'+trabajos_proyectos.asunto ELSE '' END) AS EN_PROCESO,
