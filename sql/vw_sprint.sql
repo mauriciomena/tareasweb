@@ -22,7 +22,11 @@ select sprint as id,
             where trabajos_proyectos_usuarios.numero_tarea = trabajos_proyectos.numero_tarea and
             trabajos_proyectos_usuarios.estado_tarea in ('P','E') and
             trabajos_proyectos_usuarios.usuario = usuarios.usuario and
-            usuarios.mercadotecnia = 1 ) as tot_usuarios_pendientes
+            usuarios.mercadotecnia = 1 ) as tot_usuarios_pendientes,
+            isnull((select Sum(tareas_diarias.minutos)  
+             from tareas_diarias  
+            where  tareas_diarias.numero_tarea = trabajos_proyectos.numero_tarea ),0)  as total_consumido
+      
 from trabajos_proyectos , tipo_estados_tareas
 where trabajos_proyectos.numero_tarea > 70000 AND
       tipo_estados_tareas.codigo = trabajos_proyectos.estado_tarea and

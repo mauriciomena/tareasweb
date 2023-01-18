@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 		TESTING_OK: DataTypes.STRING,
 		HECHO: DataTypes.STRING,
     tot_usuarios_pendientes:  DataTypes.BIGINT,
+    total_consumido:  DataTypes.BIGINT,
     },
     {
       sequelize,
