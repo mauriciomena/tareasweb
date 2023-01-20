@@ -53,9 +53,9 @@ module.exports = {
         inicial = 0
         let tot_consumido =  tareas.reduce((accum,current)=> accum + current.total_consumido, inicial)
 
-        let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'P' || tarea.estado_tarea === 'N' ) && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
+        let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'L' || tarea.estado_tarea === 'N' ) && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
         //let tiempobacklog = backlog.reduce((acc,tarea)=>{ return acc += tarea.tiempo_presupuestado })
-        let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'P' && tarea.tarea_en_proceso > 0 )
+        let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'L' && tarea.tarea_en_proceso > 0 )
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
         let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
         let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E' || tarea.estado_tarea === 'S' || ( tarea.estado_tarea === 'P' && tarea.tot_usuarios_pendientes === 0) )
