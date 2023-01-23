@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   vw_sprint.init(
     { 
-		dificultad: DataTypes.STRING,
+    deno_dificultad: DataTypes.STRING,
     estado_tarea: DataTypes.STRING,
     numero_tarea: DataTypes.BIGINT,
     asunto: DataTypes.STRING,
@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 		HECHO: DataTypes.STRING,
     tot_usuarios_pendientes:  DataTypes.BIGINT,
     total_consumido:  DataTypes.BIGINT,
+    puntos_dificultad: DataTypes.INTEGER,
     },
     {
       sequelize,

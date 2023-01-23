@@ -53,6 +53,9 @@ module.exports = {
         inicial = 0
         let tot_consumido =  tareas.reduce((accum,current)=> accum + current.total_consumido, inicial)
 
+        inicial = 0
+        let total_puntos =  tareas.reduce((accum,current)=> accum + current.puntos_dificultad, inicial)
+
         let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'L' || tarea.estado_tarea === 'N' ) && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
         //let tiempobacklog = backlog.reduce((acc,tarea)=>{ return acc += tarea.tiempo_presupuestado })
         let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'L' && tarea.tarea_en_proceso > 0 )
@@ -84,7 +87,8 @@ module.exports = {
             hecho:totalHecho,
             url : `http://${req.headers.host}/tareas/sprint/${req.params.id}`,
             presupuesto: tot_presupuesto,
-            consumido: tot_consumido
+            consumido: tot_consumido,
+            total_puntos: total_puntos
           },
           data: {
              backlog,
