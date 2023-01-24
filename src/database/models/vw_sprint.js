@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     tiempo_presupuestado: DataTypes.BIGINT,
     tarea_en_proceso:DataTypes.BIGINT,
 		BACKLOG: DataTypes.STRING,
+    HACER: DataTypes.STRING,
 		EN_PROCESO: DataTypes.STRING,
 		EN_TESTING: DataTypes.STRING,
 		TESTING_OK: DataTypes.STRING,

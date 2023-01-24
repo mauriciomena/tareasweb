@@ -55,8 +55,8 @@ module.exports = {
 
         inicial = 0
         let total_puntos =  tareas.reduce((accum,current)=> accum + current.puntos_dificultad, inicial)
-
-        let backlog  = tareas.filter(tarea=> (( tarea.estado_tarea === 'L' || tarea.estado_tarea === 'N' ) && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
+        let backlog  = tareas.filter(tarea=> ( tarea.estado_tarea === 'N' && tarea.tot_usuarios_pendientes > 0) )
+        let hacer  = tareas.filter(tarea=> (tarea.estado_tarea === 'L' && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
         //let tiempobacklog = backlog.reduce((acc,tarea)=>{ return acc += tarea.tiempo_presupuestado })
         let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'L' && tarea.tarea_en_proceso > 0 )
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
@@ -64,6 +64,7 @@ module.exports = {
         let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E' || tarea.estado_tarea === 'S' || ( tarea.estado_tarea === 'P' && tarea.tot_usuarios_pendientes === 0) )
         
         let totalBacklog  = backlog.length
+        let totalhacer  = hacer.length
         let totalProceso  = proceso.length
         let totalTesting  = testing.length
         let totalTestingOk  = testingOk.length
@@ -81,6 +82,7 @@ module.exports = {
             status: 200,
             total : tareas.length,
             enBacklog:totalBacklog ,            
+            enHacer:totalhacer,
             enProceso:totalProceso,
             enTesting:totalTesting,
             enTestingOk:totalTestingOk,
@@ -91,6 +93,7 @@ module.exports = {
             total_puntos: total_puntos
           },
           data: {
+              hacer,
              backlog,
              proceso,
              testing,
