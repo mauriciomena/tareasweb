@@ -34,6 +34,51 @@ module.exports = {
         })          
       }).catch((error) => res.send(error));
   },
+  usuarios: async(req, res) => {
+
+    try {
+
+      const data = await db.vw_trabajos_proyectos_usuarios.findAll({
+        where: {        
+             id: req.params.id 
+        }
+      })
+      console.log(data);
+      res.json({
+        meta:{
+          status: 200,
+          total : data.length,
+          url : `http://${req.headers.host}/tareas/usuarios`
+        },
+        data: data
+    })
+      
+    } catch (error) {
+
+
+      console.log(error);
+      res.json({
+        errors: {
+          status : 500,
+          detail : 'Error interno en la peticion de la información',
+          msg: 'Error al grabar en el servidor'
+        }
+        
+      })
+      
+    }
+
+
+
+    // return res.json({
+    //   meta:{
+    //     status: 200,
+    //     total : data.length,
+    //     url : `http://${req.headers.host}/tareas/articulos`
+    //   })
+
+ 
+  },
   sprint: (req, res) => {
     console.log(req.params.id);
 
@@ -56,12 +101,32 @@ module.exports = {
         inicial = 0
         let total_puntos =  tareas.reduce((accum,current)=> accum + current.puntos_dificultad, inicial)
         let backlog  = tareas.filter(tarea=> ( tarea.estado_tarea === 'N' && tarea.tot_usuarios_pendientes > 0) )
+        inicial = 0
+        let puntos_backlog =  tareas.reduce((accum,current)=>  accum + (current.estado_tarea === 'N' && current.tot_usuarios_pendientes > 0 ? current.puntos_dificultad: 0), inicial)
+        
         let hacer  = tareas.filter(tarea=> (tarea.estado_tarea === 'L' && tarea.tarea_en_proceso === 0 && tarea.tot_usuarios_pendientes > 0) )
-        //let tiempobacklog = backlog.reduce((acc,tarea)=>{ return acc += tarea.tiempo_presupuestado })
+        inicial = 0
+        let puntos_hacer =  tareas.reduce((accum,current)=>  accum + ( current.estado_tarea === 'L' && current.tarea_en_proceso === 0 && current.tot_usuarios_pendientes > 0 ? current.puntos_dificultad: 0), inicial)
+        
         let proceso  = tareas.filter(tarea=> tarea.estado_tarea === 'L' && tarea.tarea_en_proceso > 0 )
+
+        inicial = 0
+        let puntos_proceso =  tareas.reduce((accum,current)=>  accum + ( current.estado_tarea === 'L' && current.tarea_en_proceso > 0 ? current.puntos_dificultad: 0), inicial)
+        
         let testing  = tareas.filter(tarea=> tarea.estado_tarea === 'T')
+
+        inicial = 0
+        let puntos_testing =  tareas.reduce((accum,current)=>  accum +  ( current.estado_tarea === 'T' ? current.puntos_dificultad: 0), inicial)
+
         let testingOk  = tareas.filter(tarea=> tarea.estado_tarea === 'X')
+
+        inicial = 0
+        let puntos_testingOk =  tareas.reduce((accum,current)=>  accum +  (current.estado_tarea === 'X' ? current.puntos_dificultad: 0), inicial)
+
         let hecho  = tareas.filter(tarea=> tarea.estado_tarea === 'A' || tarea.estado_tarea === 'D' || tarea.estado_tarea === 'E' || tarea.estado_tarea === 'S' || ( tarea.estado_tarea === 'P' && tarea.tot_usuarios_pendientes === 0) )
+
+        inicial = 0
+        let puntos_hecho=  tareas.reduce((accum,current)=>  accum +  ( current.estado_tarea === 'A' || current.estado_tarea === 'D' || current.estado_tarea === 'E' || current.estado_tarea === 'S' || ( current.estado_tarea === 'P' && current.tot_usuarios_pendientes === 0)? current.puntos_dificultad: 0), inicial)
         
         let totalBacklog  = backlog.length
         let totalhacer  = hacer.length
@@ -82,11 +147,17 @@ module.exports = {
             status: 200,
             total : tareas.length,
             enBacklog:totalBacklog ,            
+            puntosBacklog:puntos_backlog,
             enHacer:totalhacer,
+            puntosEnHacer:puntos_hacer,
             enProceso:totalProceso,
+            puntosEnProceso:puntos_proceso,
             enTesting:totalTesting,
+            punstoEnTesting:puntos_testing,
             enTestingOk:totalTestingOk,
+            puntosEnTestingOk:puntos_testingOk,
             hecho:totalHecho,
+            puntosHecho: puntos_hecho,
             url : `http://${req.headers.host}/tareas/sprint/${req.params.id}`,
             presupuesto: tot_presupuesto,
             consumido: tot_consumido,

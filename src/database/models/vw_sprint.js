@@ -17,11 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       //   foreignKey: 'products_id'
       // })
 
-      // // hasMany associations
-      // Product.hasMany(models.Image,{
-      //   as:"images",
-      //   foreignKey:"products_id"
-      // })
+      // hasMany associations
+      
+      
 
       // // belongsTo associations
       // Product.belongsTo(models.Category,{
@@ -48,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     tot_usuarios_pendientes:  DataTypes.BIGINT,
     total_consumido:  DataTypes.BIGINT,
     puntos_dificultad: DataTypes.INTEGER,
+    en_proceso_por: DataTypes.STRING,
     },
     {
       sequelize,

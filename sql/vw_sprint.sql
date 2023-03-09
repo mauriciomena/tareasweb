@@ -2,12 +2,7 @@ ALTER VIEW vw_sprint
 as
 select sprint as id,
          isnull(convert(numeric(3,0),trabajos_proyectos.dificultad),0) as puntos_dificultad,
-         (CASE WHEN dificultad = '3'THEN 'ALTA'
-              WHEN dificultad = '2'THEN 'MEDIA'
-              WHEN dificultad = '4'THEN 'A DEFINIR'
-              ELSE
-              'BAJA'
-              END) AS deno_dificultad,
+         trabajos_proyectos.dificultad AS deno_dificultad,
        trabajos_proyectos.estado_tarea,
        trabajos_proyectos.numero_tarea,
        trabajos_proyectos.asunto,
@@ -30,10 +25,17 @@ select sprint as id,
              from tareas_diarias  , usuarios
             where  tareas_diarias.numero_tarea = trabajos_proyectos.numero_tarea  and
                    tareas_diarias.usuario = usuarios.usuario and
-                   usuarios.mercadotecnia = 1 ),0)  as total_consumido
+                   usuarios.mercadotecnia = 1 ),0)  as total_consumido,
+        ( select top 1 trabajos_proyectos_usuarios.usuario
+            from trabajos_proyectos_usuarios, usuarios
+            where trabajos_proyectos_usuarios.numero_tarea = trabajos_proyectos.numero_tarea and
+            trabajos_proyectos_usuarios.estado_tarea = 'E' and
+            trabajos_proyectos_usuarios.usuario = usuarios.usuario and
+            usuarios.mercadotecnia = 1 ) as en_proceso_por
       
 from trabajos_proyectos , tipo_estados_tareas
 where trabajos_proyectos.numero_tarea > 70000 AND
       tipo_estados_tareas.codigo = trabajos_proyectos.estado_tarea and
-      trabajos_proyectos.estado_tarea in ('P','L','N','T','X','A','E','D','C','S')  ;
+      trabajos_proyectos.estado_tarea in ('P','L','N','T','X','A','E','D','C','S')  and   
+      sprint = '10' ;
 
