@@ -173,5 +173,24 @@ module.exports = {
           }
       })          
     }).catch((error) => res.json(error));
-}
-  };
+  } ,
+  entregas: (req, res) => {
+
+    db.vw_entregas.findAll( { 
+      order: [
+        ['id', 'DESC']
+      ] })
+      .then((entregas) => {
+        //res.render("products/productList.ejs", { products });
+        //res.json(tareas)
+        res.json({
+          meta:{
+            status: 200,
+            total : entregas.length,
+            url : `http://${req.headers.host}/tareas/entregas`
+          },
+          data: entregas
+      })          
+    }).catch((error) => res.send(error));
+  },
+};

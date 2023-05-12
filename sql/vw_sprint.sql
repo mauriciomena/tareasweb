@@ -36,6 +36,4 @@ select sprint as id,
 from trabajos_proyectos , tipo_estados_tareas
 where trabajos_proyectos.numero_tarea > 70000 AND
       tipo_estados_tareas.codigo = trabajos_proyectos.estado_tarea and
-      trabajos_proyectos.estado_tarea in ('P','L','N','T','X','A','E','D','C','S')  and   
-      sprint = '10' ;
-
+      trabajos_proyectos.estado_tarea in ('P','L','N','T','X','A','E','D','C','S')  ;

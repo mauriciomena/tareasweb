@@ -8,7 +8,7 @@ const cors    = require('cors')
 //Rutas
 
 const tareasRoutes       = require('./Routes/tareas/tareasRoutes');
-
+const entregasRoutes       = require('./Routes/tareas/entregasRoutes');
 app.use(express.static('public'));
 
 app.use(cors());
@@ -18,8 +18,9 @@ app.set('view engine','ejs');
 app.use(methodOverride('_method'));
 
 // Routes
-//app.use('/', mainRoutes) ;
+
 app.use('/tareas', tareasRoutes) ;
+app.use('/entregas', entregasRoutes) ;
 
 //app.use((req,res,next)=>{res.status(404).render('not-found')});
 
