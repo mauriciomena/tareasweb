@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       estado_tarea: DataTypes.STRING,
       deno_tipo_incidente: DataTypes.STRING,
       fecha: DataTypes.DATE,
-    
     },
     {
       sequelize,

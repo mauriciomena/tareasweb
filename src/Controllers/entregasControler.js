@@ -24,6 +24,33 @@ module.exports = {
       })          
     }).catch((error) => res.send(error));
   },
+  listForDate: (req, res) => {
+    const { inicial , final } = req.query
+    const ini = new Date(inicial)
+    const fin = new Date(final)   
+    
+    db.vw_entregas.findAll( { 
+      where: {
+        fecha: {
+          [Op.between]: [ini, fin],           
+        }
+      },
+      order: [
+        ['id', 'DESC']
+      ] })
+      .then((entregas) => {
+        //res.render("products/productList.ejs", { products });
+        //res.json(tareas)
+        res.json({
+          meta:{
+            status: 200,
+            total : entregas.length,
+            url : `http://${req.headers.host}/entregas`
+          },
+          data: entregas
+      })          
+    }).catch((error) => res.send(error));
+  },
   listCompilaciones: (req, res) => {
 
     db.vw_entregas.findAll( { 
