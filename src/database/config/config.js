@@ -2,23 +2,23 @@ require('dotenv').config()
 module.exports =
 {
     "development": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_DATABASE,
-    "host": process.env.DB_HOST,
-    "port": process.env.DB_PORT,
-    "dialect": process.env.DB_DIALECT,
+    "username": process.env.TDB_USERNAME,
+    "password": process.env.TDB_PASSWORD,
+    "database": process.env.TDB_DATABASE,
+    "host": process.env.TDB_HOST,
+    "port": process.env.TDB_PORT,
+    "dialect": process.env.TDB_DIALECT,
     "options": {
         "encrypt": "false"
         }
     },
     "production": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_DATABASE,
-    "host": process.env.DB_HOST,
-    "port": process.env.DB_PORT,
-    "dialect": process.env.DB_DIALECT,
+    "username": process.env.TDB_USERNAME,
+    "password": process.env.TDB_PASSWORD,
+    "database": process.env.TDB_DATABASE,
+    "host": process.env.TDB_HOST,
+    "port": process.env.TDB_PORT,
+    "dialect": process.env.TDB_DIALECT,
      "options": {
             "encrypt": "false"
         }

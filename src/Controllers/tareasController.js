@@ -79,9 +79,9 @@ module.exports = {
 
  
   },
-  sprint: (req, res) => {
-    console.log(req.params.id);
-
+  sprint:  (req, res) =>  {
+    
+   
     db.vw_sprint.findAll({
           where: {
             [Op.and]: [
@@ -91,6 +91,7 @@ module.exports = {
         }
      )
       .then((tareas) => {
+        console.log(tareas);
         //res.render("products/productList.ejs", { products });
         let inicial = 0 
         let tot_presupuesto =  tareas.reduce((accum,current)=> accum + current.tiempo_presupuestado, inicial)
@@ -140,12 +141,14 @@ module.exports = {
         // console.log(acum);
         // console.log('----------------------------------------tiempobacklog');
         
-
-
         res.json({
           meta:{
             status: 200,
             total : tareas.length,
+            detalle: tareas[0].detalle,
+            objetivo: tareas[0].objetivo,
+            fecha_inicio: tareas[0].fecha_inicio,
+            fecha_final: tareas[0].fecha_final,
             enBacklog:totalBacklog ,            
             puntosBacklog:puntos_backlog,
             enHacer:totalhacer,

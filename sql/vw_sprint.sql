@@ -1,6 +1,10 @@
 ALTER VIEW vw_sprint
 as
-select sprint as id,
+select trabajos_proyectos.sprint as id,
+        trabajos_proyectos_sprint.detalle,
+        trabajos_proyectos_sprint.objetivo,
+        trabajos_proyectos_sprint.fecha_inicio,
+        trabajos_proyectos_sprint.fecha_final,
          isnull(convert(numeric(3,0),trabajos_proyectos.dificultad),0) as puntos_dificultad,
          trabajos_proyectos.dificultad AS deno_dificultad,
        trabajos_proyectos.estado_tarea,
@@ -31,9 +35,10 @@ select sprint as id,
             where trabajos_proyectos_usuarios.numero_tarea = trabajos_proyectos.numero_tarea and
             trabajos_proyectos_usuarios.estado_tarea = 'E' and
             trabajos_proyectos_usuarios.usuario = usuarios.usuario and
-            usuarios.mercadotecnia = 1 ) as en_proceso_por
-      
-from trabajos_proyectos , tipo_estados_tareas
+            usuarios.mercadotecnia = 1 ) as en_proceso_por,
+            trabajos_proyectos.prioridad
+from trabajos_proyectos , tipo_estados_tareas, trabajos_proyectos_sprint
 where trabajos_proyectos.numero_tarea > 70000 AND
       tipo_estados_tareas.codigo = trabajos_proyectos.estado_tarea and
+      trabajos_proyectos_sprint.sprint = trabajos_proyectos.sprint and
       trabajos_proyectos.estado_tarea in ('P','L','N','T','X','A','E','D','C','S')  ;
